@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<head>
+		<title> PAXBadges</title>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel='stylesheet' type='text/css' href='https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css' />
+		<link rel='stylesheet' type='text/css' href='jquery-ui.icon-font.min.css' />
+		<link rel='stylesheet' type='text/css' href='badgerbadger.css' />
+		<script type="text/javascript" src='https://code.jquery.com/jquery-3.4.1.min.js'></script>
+		<script type="text/javascript" src='https://code.jquery.com/ui/1.12.1/jquery-ui.min.js'></script>
+		<script type="text/javascript" src="https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.min.js"></script>
+		<script type="text/javascript" src='https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js'></script>
+		<script type="text/javascript" src='https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js'></script>
+	</head>
+
+	<body>
+		<div id='header'>
+			<h1 class='main-title'>Pax Badges World</h1>
+			<h4 class='badge-counter'></h4>
+		</div>
+
+		<a href='#' class='float info-button'>
+			<i class='ui-icon ui-icon-circle-b-help my-float'></i>
+		</a>
+		<div class="label-container info-container">
+			<i class="ui-icon ui-icon-caret-2-e label-arrow"></i>
+			<div class="label-text">About PAX badges</div>
+		</div>
+
+		<a href='#' class='float nav-button'>
+			<i class='ui-icon ui-icon-search my-float'></i>
+		</a>
+		<div class="label-container nav-container">
+			<div class="label-text">Toggle search panel</div>
+			<i class="ui-icon ui-icon-caret-2-w label-arrow"></i>
+		</div>
+
+		<div id='loadsplash'>
+			<h3>Loading...</h3>
+			<p>Preparing PAX badges, please be patient!</p>
+		</div>
+
+		<div id='accordion' class='preloader'>
+			<h3>PAXBadges</h3>
+			<div>
+				<p>A fun way to acknowledge your acomplishments</p>
+			</div>
+		</div>
+
+		<div class='filters preloader' id='controls'>
+		
+			<div class='ui-group filter-cats'>
+				<h6>PAX</h6>
+				<div class='button-group js-radio-button-group' data-filter-group='category'>
+					<button class='button is-checked' data-filter='.grid-item'>SHOW ALL</button>
+					<button class='button' data-filter='.Anchor'>Anchor</button>
+					<button class='button' data-filter='.bg'>Bubble Gubby</button>
+					<button class='button' data-filter='.ft'>French Toast</button>
+					<button class='button' data-filter='.f'>flamingo</button>
+					<button class='button' data-filter='.directories'>directories</button>
+					<button class='button' data-filter='.feeds'>feeds</button>
+					<button class='button' data-filter='.food'>food</button>
+					<button class='button' data-filter='.games'>games</button>
+					<button class='button' data-filter='.geography'>geography</button>
+					<button class='button' data-filter='.hosts'>hosts</button>
+					<button class='button' data-filter='.humor'>humor</button>
+					<button class='button' data-filter='.memes'>memes</button>
+					<button class='button' data-filter='.music'>music</button>
+					<button class='button' data-filter='.navigation'>navigation</button>
+					<button class='button' data-filter='.operated'>operated</button>
+					<button class='button' data-filter='.other'>other</button>
+					<button class='button' data-filter='.payment'>payment</button>
+					<button class='button' data-filter='.politics'>politics</button>
+					<button class='button' data-filter='.programs'>programs</button>
+					<button class='button' data-filter='.sports'>sports</button>
+					<button class='button' data-filter='.validated'>validated</button>
+					<button class='button' data-filter='.websites'>websites</button>
+				</div>
+			</div>
+			<h6 class='slowsorry'>Please be patient when using the filters, there are a lot of badges to sort!</h6>
+		</div>
+
+		<div class='grid'>
+			<!-- badges go here! -->
+		</div>
+
+		<div class="page-load-status">
+		  <div class="loader-ellips infinite-scroll-request">
+		    <span class="loader-ellips__dot"></span>
+		    <span class="loader-ellips__dot"></span>
+		    <span class="loader-ellips__dot"></span>
+		    <span class="loader-ellips__dot"></span>
+		  </div>
+		</div>
+
+		<script src='nojson.js'></script>
+		<script src='badgerbadger.js'></script>
+	</body>
+
+</html>
