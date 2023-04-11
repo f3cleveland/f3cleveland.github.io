@@ -48,7 +48,7 @@ $('.nav-button').click(function(){
   }
 
   function updateCounter(){
-    badgeCounter.text('Showing '+ iso.filteredItems.length + ' out of ' + badgeTotal + ' badges');
+    badgeCounter.text('Showing '+ iso.filteredItems.length + ' out of ' + badgeTotal + ' badges. A Fun way acknowledge your accomplishments');
   }
 
   //----------------core-----------------//
