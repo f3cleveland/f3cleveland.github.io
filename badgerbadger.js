@@ -28,7 +28,7 @@ $('.nav-button').click(function(){
 
   const vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
   const vh = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-  var bc = (vw/80)*(vh/15).toFixed(0)  // # of badges that fit viewport!
+  var bc = (vw/80)*(vh/80).toFixed(0)  // # of badges that fit viewport!
   var badgeTotal = nojson.length;
   var badgeCount = (bc>960) ? 960 : bc;  // limited by content max-width...
   var buttonFilters = {}; // store filter for each group
