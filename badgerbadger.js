@@ -32,7 +32,7 @@ $('.nav-button').click(function(){
   var badgeTotal = nojson.length;
   var badgeCount = (bc>960) ? 960 : bc;  // limited by content max-width...
   var buttonFilters = {}; // store filter for each group
-  var buttonFilter;
+  var buttonFilter = '.SHOW-ALL-BADGES';
   var qsRegex; // quick search regex
   var badgeCounter = $('.badge-counter');
 
@@ -48,7 +48,14 @@ $('.nav-button').click(function(){
   }
 
   function updateCounter(){
-    badgeCounter.text('Showing '+ iso.filteredItems.length + ' out of ' + badgeTotal + ' badges. A Fun way acknowledge your accomplishments');
+    if ( buttonFilter == '.SHOW-ALL-BADGES' )
+	    badgeCounter.text( 'Showing All ' + badgeTotal + ' Badges to earn!');
+    else 
+
+            //display = buttonFilter.replace("-", " " ).replace(".", "")
+	    badgeCounter.text( buttonFilter.replace("-", " " ).replace(".", "") + ' Earned ' + iso.filteredItems.length + ' of ' + badgeTotal + ' .');
+    
+
   }
 
   //----------------core-----------------//
@@ -57,14 +64,14 @@ $('.nav-button').click(function(){
 
   // init isotope
   $badges.isotope({
-    itemSelector: '.grid-item',
+    itemSelector: '.SHOW-ALL-BADGES',
     layoutMode: 'fitRows',
     stagger: 2,
     transitionDuration: 100,
     filter: function() {
       var $this = $(this);
       var searchResult = qsRegex ? $this.is( qsRegex ) : true;
-      var buttonResult = buttonFilter ? $this.is( buttonFilter ) : true;
+      var buttonResult = buttonFilter ? $this.is( buttonFilter.toUpperCase() ) : true;
       return searchResult && buttonResult;
     }
   });
@@ -75,7 +82,7 @@ $('.nav-button').click(function(){
   $badges.infiniteScroll({
     path: 'page{{#}}',
     loadOnScroll: false,
-    itemSelector:'.grid-item',
+    itemSelector:'.SHOW-ALL-BADGES',
     outlayer: iso,
     scrollThreshold:300,
   });
@@ -85,16 +92,57 @@ $('.nav-button').click(function(){
 
   // use value of search field to filter
   var $quicksearch = $('.quicksearch').keyup( _.debounce( function() {
-    qsRegex = new RegExp( $quicksearch.val(), 'gi' );
-    var filterGroup = $buttonGroup.attr('data-filter-group');
+    var $this = $(this);
+
+    console.log( 'qs.val() ' + $quicksearch.val() )
+
+    //console.log( qsRegex )
+    //var filterGroup = $buttonGroup.attr('data-filter-group');
     // set filter for group
-    buttonFilters[ filterGroup ] = qsRegex;
+    //var $buttonFilters = $this.attr('data-filter');
+    //var $buttonGroup = $this.parents('.data-filter');
+    //console.log( $buttonGroup )
 
+    //findButtone = $buttonGroup.find($quicksearch.val())
+    //console.log( findButtone )
 
-    window.scrollTo(0, 0);
-    $badges.isotope();
-    updateCounter();
-  }, 300));
+    var tmpbuttonFilter = '.' + concatValues( $quicksearch.val() ).replace(" ","-")
+    matchMe =  tmpbuttonFilter.toUpperCase();  
+    parentDOM = document.getElementById("PAX-NAME");
+    var className = parentDOM.getElementsByClassName("button");
+    
+    var isCheckIdx=-1
+    var found = 0
+    for(var index=0;index < className.length;index++){
+      //foo.getAttribute('data-total-count');    
+      //console.log( index + ' .data-filter=' + className[index].getAttribute('data-filter') ); 
+      //console.log( 'className ' + className[index].className );
+      
+      if ( className[index].className == "button is-checked" ){
+        console.log(index + ' is checked ' +  className[index].getAttribute('data-filter') );
+        isCheckIdx=index;
+      }
+      
+      if (  className[index].getAttribute('data-filter')  == matchMe ) {
+      	console.log('MATCH ' + index + ' .data-filter=' + className[index].getAttribute('data-filter') ); 
+        //parentDOM.getElementsByClassName("button is-checked").removeClass('is-checked');
+        className[index].className = "button is-checked"
+        //className[index].removeClass('is-checked');
+	//className[index].getAttribute('data-filter') );       
+        found=1
+      }
+    }
+    if ( isCheckIdx > -1 && found ) {
+      console.log('found, unchecking');
+      className[isCheckIdx].className = "button";
+      buttonFilter = tmpbuttonFilter;
+
+      //console.log( 'butnFilter = ' + buttonFilter );
+      window.scrollTo(0, 0);
+      $badges.isotope();
+      updateCounter();
+    }
+  }, 1000));
 
 
 
@@ -102,11 +150,11 @@ $('.nav-button').click(function(){
     var $this = $(this);
     // get group key
     var $buttonGroup = $this.parents('.button-group');
-    var filterGroup = $buttonGroup.attr('data-filter-group');
-    // set filter for group
-    buttonFilters[ filterGroup ] = $this.attr('data-filter');
-    // combine filters
+    //var filterGroup = $buttonGroup.attr('data-filter-group');
+    buttonFilters = $this
+     .attr('data-filter');
     buttonFilter = concatValues( buttonFilters );
+    console.log( buttonFilter )
     // Isotope arrange
     window.scrollTo(0, 0);
     $badges.isotope();
@@ -136,7 +184,7 @@ $('.nav-button').click(function(){
     var freshBadges = $(nojson.splice(0,badgeCount).join('')); // from nojson.js
     freshBadges.imagesLoaded().always(function(){
       $badges.append(freshBadges).isotope('appended',freshBadges);
-      $('.grid-item').removeClass('preloader');
+      $('.SHOW-ALL-BADGES').removeClass('preloader');
       $('.page-load-status').addClass('preloader');
       $('#loadsplash').addClass('preloader');
       $badges.isotope('shuffle');
@@ -152,7 +200,7 @@ $('.nav-button').click(function(){
     freshBadges.imagesLoaded(function(){
       $('.page-load-status').addClass('preloader');
       $badges.append(freshBadges).isotope('appended',freshBadges);
-      $('.grid-item').removeClass('preloader');
+      $('.SHOW-ALL-BADGES').removeClass('preloader');
       updateCounter();
     });
   }, 5000));
